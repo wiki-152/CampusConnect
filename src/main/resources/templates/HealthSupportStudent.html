@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Health Support</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(-45deg, lightgreen,#D93012, #1423F0, #23d5ab);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            color: #fff;
+        }
+
+        @keyframes gradientBG {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        .container {
+            text-align: center;
+            background: rgba(0, 0, 0, 0.6);
+            padding: 40px;
+            border-radius: 10px;
+            max-width: 80%;
+        }
+
+        .slide-container {
+            width: 80%;
+            max-width: 1000px;
+            overflow: hidden;
+            position: relative;
+            margin-top: 20px;
+        }
+
+        .slides {
+            display: flex;
+            transition: transform 0.5s ease;
+        }
+
+        .slide {
+            min-width: 100%;
+            box-sizing: border-box;
+            padding: 80px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+        }
+
+        .arrow {
+            position: absolute;
+            top: 50%;
+            width: 40px;
+            height: 40px;
+            background-color: rgba(0, 0, 0, 0.7);
+            border: none;
+            color: #fff;
+            font-size: 25px;
+            cursor: pointer;
+            z-index: 2;
+            transform: translateY(-50%);
+            opacity: 0.8;
+        }
+
+        .arrow:hover {
+            opacity: 1;
+        }
+
+        .prev {
+            left: 10px;
+        }
+
+        .next {
+            right: 10px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h2>Health Support and Tipps</h2>
+</div>
+
+<div class="slide-container">
+    <button class="arrow prev">&#10094;</button>
+    <div class="slides">
+        <div class="slide">
+            <h3>Physical Health Tips</h3>
+            <p>Maintaining physical health is crucial for students. Regular exercise, a balanced diet, and adequate sleep can significantly improve overall well-being. Aim for at least 30 minutes of exercise daily, incorporate fruits and vegetables into your meals, and ensure you get 7-9 hours of sleep each night.</p>
+        </div>
+        <div class="slide">
+            <h3>Mental Health Tips</h3>
+            <p>Mental health is just as important as physical health. Practice mindfulness and meditation to manage stress. Stay connected with friends and family to foster a strong support system. If you ever feel overwhelmed, don't hesitate to reach out to a counselor or mental health professional.</p>
+        </div>
+        <div class="slide">
+            <h3>Support Resources</h3>
+            <p>There are numerous resources available for students seeking support. Many schools offer counseling services, wellness programs, and mental health hotlines. Online resources such as mental health apps and forums can also provide valuable support and information.</p>
+        </div>
+        <div class="slide">
+            <h3>Time Management Tips</h3>
+            <p>Effective time management is essential for students to balance academics, extracurricular activities, and personal time. Use a planner or digital calendar to schedule your tasks, set realistic goals, and prioritize your assignments. Taking short breaks during study sessions can help maintain focus and prevent burnout.</p>
+        </div>
+        <div class="slide">
+            <h3>Social Connections</h3>
+            <p>Building and maintaining social connections is important for emotional well-being. Join student groups or clubs that interest you, participate in group activities, and make an effort to connect with classmates. Strong social networks can provide support, reduce stress, and improve your overall mood.</p>
+        </div>
+        <div class="slide">
+            <h3>Healthy Eating Habits</h3>
+            <p>Adopting healthy eating habits can boost your energy levels and enhance cognitive function. Avoid skipping meals, limit your intake of processed foods, and stay hydrated by drinking plenty of water. Incorporating whole grains, lean proteins, and healthy fats into your diet can provide sustained energy throughout the day.</p>
+        </div>
+        <div class="slide">
+            <h3>Physical Activity</h3>
+            <p>Regular physical activity is vital for maintaining physical and mental health. Find an exercise routine that you enjoy, whether it's jogging, yoga, or playing a sport. Physical activity can reduce stress, improve mood, and enhance academic performance by increasing concentration and cognitive function.</p>
+        </div>
+        <div class="slide">
+            <h3>Sleep Hygiene</h3>
+            <p>Good sleep hygiene is critical for overall health and academic success. Create a consistent sleep schedule, avoid caffeine and electronics before bedtime, and create a relaxing bedtime routine. Ensuring you get 7-9 hours of quality sleep each night can improve memory, concentration, and mood.</p>
+        </div>
+
+    </div>
+    <button class="arrow next">&#10095;</button>
+</div>
+
+<script>
+    const slides = document.querySelector('.slides');
+    const slide = document.querySelectorAll('.slide');
+    const next = document.querySelector('.next');
+    const prev = document.querySelector('.prev');
+    let currentIndex = 0;
+
+    function showSlide(index) {
+        slides.style.transform = `translateX(-${index * 100}%)`;
+    }
+
+    next.addEventListener('click', () => {
+        currentIndex = (currentIndex + 1) % slide.length;
+        showSlide(currentIndex);
+    });
+
+    prev.addEventListener('click', () => {
+        currentIndex = (currentIndex - 1 + slide.length) % slide.length;
+        showSlide(currentIndex);
+    });
+</script>
+
+</body>
+</html>

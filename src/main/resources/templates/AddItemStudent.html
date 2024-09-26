@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Page Title</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(-45deg, lightgreen, #D93012, #1423F0, #23d5ab);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            color: #fff;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .container {
+            text-align: center;
+            background: rgba(0, 0, 0, 0.7); /* slightly more opaque for better readability */
+            padding: 40px;
+            border-radius: 10px;
+            width: 50%; /* fixed width */
+            max-width: 600px; /* maximum width */
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        label {
+            align-self: flex-start;
+            margin-bottom: 5px;
+        }
+
+        input[type="text"],
+        input[type="file"],
+        textarea {
+            width: 100%; /* full width */
+            padding: 8px;
+            margin-bottom: 20px; /* space between form elements */
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        button {
+            width: 50%;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            background-color: #04AA6D;
+            color: white;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #037F5B;
+        }
+    </style>
+</head>
+<body>
+<h1>Add Item</h1>
+<div class="container">
+    <form action="/ItemHome/AddItem_submit" method="post" enctype="multipart/form-data">
+        <label for="title">Title:</label>
+        <input type="text" id="title" name="title" required>
+
+        <label for="description">Description:</label>
+        <textarea id="description" name="description" required></textarea>
+
+        <label for="price">Price:</label>
+        <input type="text" id="price" name="price" required>
+
+        <label for="image1">Upload Image:</label>
+        <input type="file" id="image1" name="image1">
+        <input type="file" id="image2" name="image2">
+        <input type="file" id="image3" name="image3">
+
+        <button type="submit">Submit Post</button>
+    </form>
+</div>
+</body>
+</html>

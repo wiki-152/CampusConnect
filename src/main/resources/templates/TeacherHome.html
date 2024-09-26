@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Teacher Home</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(-45deg, lightgreen,#D93012, #1423F0, #23d5ab);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            color: #fff;
+        }
+
+        @keyframes gradientBG {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        nav {
+            width: 100%;
+            background: none;
+            padding: 10px 0;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 9999;
+            display: flex;
+            justify-content: space-between; /* Distributes items evenly */
+        }
+
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            padding: 10px 20px;
+            margin: 0 5px;
+            border-radius: 5px;
+            transition: background 0.3s, transform 0.3s;
+        }
+
+        nav a:hover {
+            background: rgba(0, 0, 0, 0.8);
+            transform: scale(1.1);
+        }
+
+        /* Customize UI button styles (right-aligned) */
+        #customizeBtn {
+            margin-left: auto;  /* Pushes button to the right */
+        }
+
+        h1 {
+            margin-top: 50px;
+            margin-bottom: 20px;
+        }
+
+        /* Popup box styles */
+        .popup {
+            display: none;
+            position: fixed;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0, 0, 0, 0.8);
+            color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            z-index: 10000;
+        }
+
+        .popup form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .popup label {
+            margin-bottom: 10px;
+            color: #fff; /* Adjusted label color */
+        }
+
+        .popup input[type="submit"] {
+            padding: 10px 20px;
+            background: rgba(255, 255, 255, 0.3);
+            border: none;
+            border-radius: 5px;
+            transition: background 0.3s, transform 0.3s;
+            cursor: pointer;
+        }
+
+        .popup input[type="submit"]:hover {
+            background: rgba(255, 255, 255, 0.5);
+            transform: scale(1.1);
+        }
+
+        /* Close button styles */
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        .close-btn:hover {
+            transform: scale(1.1);
+        }
+
+        /* Customize UI button styles (right-aligned) */
+        #rightButtons {
+            margin-left: auto;
+            padding: 10px 0;
+        }
+    </style>
+</head>
+<body>
+<nav>
+    <a href="/TeacherHome/Feed">Feed</a>
+    <a href="/TeacherHome/E-Learning_Teacher">E-Learning</a>
+    <a href="/TeacherHome/LibraryHome">Library</a>
+
+    <div id="rightButtons">
+        <a href="#" id="customizeBtn">Customize UI</a> <!-- Change href to # to prevent page reload -->
+        <a href = "/TeacherHome/ProfileTeacher" >Profile</a>
+        <a href="/TeacherHome/Logout">Logout</a>
+    </div>
+</nav>
+
+<h1>Teacher Home</h1>
+
+
+<!-- Popup box -->
+<div class="popup" id="popupBox">
+    <span class="close-btn" onclick="closePopup()">X</span> <!-- Close button -->
+    <h2>Customize UI</h2>
+    <form>
+        <label for="darkMode">Dark Mode: <input type="checkbox" id="darkMode">
+        </label>
+
+        <label for="fontStyle">Font Style:</label>
+        <select id="fontStyle">
+            <option value="Segoe UI">Segoe UI</option>
+            <option value="Tahoma">Tahoma</option>
+            <option value="Verdana">Verdana</option>
+            <option value="Arial">Arial</option>
+            <option value="Courier New">Courier New</option>
+            <option value="Georgia">Georgia</option>
+        </select>
+
+        <label for="primaryColor">Primary Color:</label>
+        <input type="color" id="primaryColor" name="primaryColor" value="#1423F0">
+
+        <label for="secondaryColor">Secondary Color:</label>
+        <input type="color" id="secondaryColor" name="secondaryColor" value="#D93012">
+
+        <input type="button" value="Apply" onclick="applySettings()"> <!-- Changed type to button -->
+    </form>
+</div>
+
+
+<script>
+    // Function to show the popup box
+    document.getElementById('customizeBtn').addEventListener('click', function() {
+        document.getElementById('popupBox').style.display = 'block';
+    });
+
+    // Function to apply UI settings
+    function applySettings() {
+        var darkMode = document.getElementById('darkMode').checked;
+        var selectedFont = document.getElementById('fontStyle').value;
+        var primaryColor = document.getElementById('primaryColor').value;
+        var secondaryColor = document.getElementById('secondaryColor').value;
+
+        // Apply dark mode
+        if (darkMode) {
+            document.body.style.background = 'linear-gradient(-45deg, #000000, #333333, #666666)';
+            document.body.style.backgroundSize = '400% 400%';
+            document.body.style.animation = 'gradientBG 15s ease infinite';
+            document.body.style.color = '#fff';
+            document.body.style.animationPlayState = 'running';
+
+        } else {
+            // Apply selected colors as a gradient
+            document.body.style.background = `linear-gradient(-45deg, lightgreen,${secondaryColor}, ${primaryColor} , #23d5ab)`;
+            document.body.style.backgroundSize = '400% 400%';
+            document.body.style.animation = 'gradientBG 15s ease infinite';
+            document.body.style.color = '#fff';
+            document.body.style.animationPlayState = 'running';
+        }
+
+        // Apply font style
+        document.body.style.fontFamily = selectedFont;
+
+        // Hide the popup box
+        document.getElementById('popupBox').style.display = 'none';
+    }
+
+    function closePopup() {
+        document.getElementById('popupBox').style.display = 'none';
+    }
+
+
+</script>
+
+
+</body>
+</html>

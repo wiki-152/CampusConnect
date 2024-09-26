@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Polls</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(-45deg, lightgreen, #D93012, #1423F0, #23d5ab);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            color: #fff;
+        }
+
+        @keyframes gradientBG {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        .container {
+            text-align: center;
+            background: rgba(0, 0, 0, 0.6);
+            padding: 40px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        .option {
+            display: flex;
+            align-items: center;
+            margin: 5px 0;
+        }
+
+        .option input {
+            margin-right: 10px;
+        }
+
+        .count {
+            margin-left: 10px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h2>Polls</h2>
+</div>
+
+<div th:each="poll : ${polls}" class="container">
+    <h3 th:text="${poll.question}">Poll Question</h3>
+    <form action="/PollHome/submitVote" method="post">
+        <input type="hidden" name="pollId" th:value="${poll.id}">
+        <div class="options">
+            <div class="option">
+                <input type="radio" id="answer1-[[${poll.id}]]" name="vote" value="1">
+                <label for="answer1-[[${poll.id}]]" th:text="${poll.answer1}">Answer 1</label>
+                <span class="count" th:text="'(' + ${poll.voteCount1} + ' votes)'"></span>
+            </div>
+            <div class="option">
+                <input type="radio" id="answer2-[[${poll.id}]]" name="vote" value="2">
+                <label for="answer2-[[${poll.id}]]" th:text="${poll.answer2}">Answer 2</label>
+                <span class="count" th:text="'(' + ${poll.voteCount2} + ' votes)'"></span>
+            </div>
+            <div class="option">
+                <input type="radio" id="answer3-[[${poll.id}]]" name="vote" value="3">
+                <label for="answer3-[[${poll.id}]]" th:text="${poll.answer3}">Answer 3</label>
+                <span class="count" th:text="'(' + ${poll.voteCount3} + ' votes)'"></span>
+            </div>
+            <div class="option">
+                <input type="radio" id="answer4-[[${poll.id}]]" name="vote" value="4">
+                <label for="answer4-[[${poll.id}]]" th:text="${poll.answer4}">Answer 4</label>
+                <span class="count" th:text="'(' + ${poll.voteCount4} + ' votes)'"></span>
+            </div>
+        </div>
+        <button type="submit">Submit Vote</button>
+    </form>
+</div>
+</body>
+</html>

@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Delete Post</title>
+    <style>
+        html {
+            overflow: hidden;
+            height: 100%;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(-45deg, lightgreen,#D93012, #1423F0, #23d5ab);
+            background-size: 400% 400%;
+            overflow: auto;
+            animation: gradientBG 15s ease infinite;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            color: #fff;
+        }
+
+        @keyframes gradientBG {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        /* Modal styles */
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed; /* Stay in place */
+            z-index: 1000; /* Ensure it is above other content */
+            left: 0;
+            top: 0;
+            width: 100%; /* Full width */
+            height: 100%; /* Full height */
+            overflow: auto; /* Enable scroll if needed */
+            background-color: rgba(0, 0, 0, 0.9); /* Black with opacity */
+            align-items: center; /* Center vertically */
+            justify-content: center; /* Center horizontally */
+        }
+
+        /* Modal Content (Image) */
+        .modal-content {
+            max-width: 80%;
+            max-height: 80%;
+            margin: auto;
+            display: block;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            animation: zoom 0.6s;
+        }
+
+        /* Animation for modal content */
+        @keyframes zoom {
+            from {transform: scale(0);}
+            to {transform: scale(1);}
+        }
+
+        /* Caption of Modal Image (Image Text) - Optional */
+        .caption {
+            margin: auto;
+            display: block;
+            width: 80%;
+            max-width: 700px;
+            text-align: center;
+            color: #ccc;
+            padding: 10px 0;
+            height: 150px;
+        }
+
+        /* The Close Button */
+        .close {
+            position: absolute;
+            top: 15px;
+            right: 35px;
+            color: #f1f1f1;
+            font-size: 40px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: #bbb;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .post-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* Common styles for links and buttons */
+        .nav-button {
+            color: #e71212;
+            text-decoration: none;
+            padding: 10px 20px;
+            margin: 0 5px;
+            border-radius: 5px;
+            transition: background 0.3s, transform 0.3s;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            font: inherit;
+            outline: inherit;
+        }
+
+        .nav-button:hover {
+            background: rgba(0, 0, 0, 0.8);
+            transform: scale(1.1);
+        }
+
+        nav {
+            width: 100%;
+            background: none;
+            padding: 10px 0;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 999;
+            display: flex;
+            justify-content: space-between; /* Distributes items evenly */
+        }
+
+        nav a {
+            color: #181515;
+            text-decoration: none;
+            padding: 10px 20px;
+            margin: 0 5px;
+            border-radius: 5px;
+            transition: background 0.3s, transform 0.3s;
+        }
+
+        nav a:hover {
+            background: rgba(0, 0, 0, 0.8);
+            transform: scale(1.1);
+        }
+
+    </style>
+</head>
+<body>
+
+
+<div th:each="post : ${posts}" style="margin: 20px; padding: 10px; background: rgba(255,255,255,0.8); color: black; border-radius: 8px;">
+    <div class="post-header">
+        <h2 class="post-title" th:text="${post.title}">Post Title</h2>
+        <form method="post" action="/PostHome/DeletePost/id/${post.id}">
+            <input type="hidden" name="postId" th:value="${post.id}">
+            <button type="submit" class="nav-button">Delete Post</button>
+        </form>
+    </div>
+    <p th:text="${post.content}">Post content</p>
+    <p>Posted by: <span th:text="${post.author}"></span> on <span th:text="${#dates.format(post.dateCreated, 'dd MMMM yyyy')}"></span></p>
+    <div th:if="${post.base64Image}">
+        <img th:src="${post.base64Image}" alt="Post Image" style="max-width: 10%; border-radius: 8px; margin-top: 10px;" class="imgModal">
+    </div>
+
+</div>
+
+<!-- The Modal -->
+<div id="myModal" class="modal">
+    <span class="close">&times;</span>
+    <img class="modal-content" id="img01">
+    <div id="caption"></div>
+</div>
+
+<script>
+    // Get the modal
+    var modal = document.getElementById("myModal");
+
+    // Get the image and insert it inside the modal - use its "alt" text as a caption
+    var modalImg = document.getElementById("img01");
+    var captionText = document.getElementsByClassName("caption")[0];
+    document.querySelectorAll('.imgModal').forEach(img => {
+        img.onclick = function() {
+            modal.style.display = "flex";
+            modalImg.src = this.src;
+            captionText.innerHTML = this.alt;
+            // Hide the navigation bar when the modal is displayed
+            document.querySelector('nav').style.display = 'none';
+        }
+    });
+
+    // Get the <span> element that closes the modal
+    var span = document.getElementsByClassName("close")[0];
+
+    // When the user clicks on <span> (x), close the modal
+    span.onclick = function() {
+        modal.style.display = "none";
+        // Show the navigation bar when the modal is closed
+        document.querySelector('nav').style.display = 'flex';
+    }
+
+    // Also close the modal if the user clicks outside of the image
+    modal.onclick = function(event) {
+        if (event.target === modal) {
+            modal.style.display = "none";
+            // Show the navigation bar when the modal is closed
+            document.querySelector('nav').style.display = 'flex';
+        }
+    }
+</script>
+
+
+
+</body>
+</html>
