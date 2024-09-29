@@ -29,6 +29,9 @@ public class IndexController {
         return "Login";
     }
 
+    @GetMapping("jira")
+    public String getJira(){return "Jira";};
+
     @PostMapping("login")
     public String login (@RequestParam ("email") String email, @RequestParam ("password") String password)
     {

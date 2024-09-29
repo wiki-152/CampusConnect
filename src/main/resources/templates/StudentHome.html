@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>Student Home</title>
     <style>
+        /*Default*/
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: linear-gradient(-45deg, lightgreen,#D93012, #1423F0, #23d5ab);
@@ -346,7 +347,7 @@
                 botMessage.textContent = 'Bot: ' + 'Our university hosts numerous events throughout the year, including seminars, workshops, and cultural festivals. Check our events calendar on the website for upcoming activities!';
             }
             else {
-                botMessage.textContent = 'Bot: ' + 'This is a response to "' + message + '"';
+                botMessage.textContent = 'Bot: ' + 'Invalid Input "' + message + '"';
             }
 
             messages.appendChild(botMessage);

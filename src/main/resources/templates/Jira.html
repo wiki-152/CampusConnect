@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Jira Issue</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            padding: 20px;
+        }
+        form {
+            background: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            margin: auto;
+        }
+        input, textarea {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Create Jira Issue</h1>
+<form id="jiraForm">
+    <input type="text" id="issueSummary" placeholder="Issue Summary" required />
+    <textarea id="issueDescription" placeholder="Issue Description" required></textarea>
+    <button type="submit">Create Issue</button>
+</form>
+
+<script>
+    // create
+    document.getElementById('jiraForm').addEventListener('submit', async function(event) {
+        event.preventDefault();
+
+        const summary = document.getElementById('issueSummary').value;
+        const description = document.getElementById('issueDescription').value;
+
+        const issueJson = JSON.stringify({
+            fields: {
+                project: { key: "CC" },  // Replace with your Jira project key
+                summary: summary,
+                description: description,
+                issuetype: { name: "Task" } // Change to the appropriate issue type if needed
+            }
+        });
+
+        try {
+            const response = await fetch('/api/jira/createIssue', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: issueJson
+            });
+
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+
+            const result = await response.json();
+            console.log(result);
+            alert('Issue created successfully: ' + result.key);
+        } catch (error) {
+            console.error('Error creating issue:', error);
+            alert('Failed to create issue: ' + error.message);
+        }
+    });
+</script>
+
+</body>
+</html>
